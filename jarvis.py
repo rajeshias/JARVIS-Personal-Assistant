@@ -161,7 +161,7 @@ if __name__ == '__main__':
                                  "I have been here for a while!"]))
 
         if 'jarvis' in query and len(query)>15 and 'play' not in query:
-            askbrain()
+            askbrain(query)
 
         if 'what is the time' in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
