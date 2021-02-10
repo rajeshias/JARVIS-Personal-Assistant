@@ -33,10 +33,18 @@ def joke():
     if 'no' in q:
         speak("sorry for disturbing you Sir!")
         return None
-    speak(pyjokes.get_joke())
+    else:
+        speak(pyjokes.get_joke())
 
 def fact():
-    speak("Here is a fun fact:...."+randfacts.getFact())
+    speak("Here is a fun fact:.. .."+randfacts.getFact())
+
+def askbrain(query='ask me'):
+    if query=='ask me':
+        speak("Sir! I have been wondering!")
+    while query != 'none':
+        speak(brain(query))
+        query = takeCommand().lower()
 
 def remember():
     remember = open('data.txt', 'r')
@@ -45,14 +53,14 @@ def remember():
 def takeCommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
-        # print('Listening...')
+        print('Listening...')
         r.pause_threshold = 0.7
         # r.energy_threshold = 50
         r.adjust_for_ambient_noise(source, duration=1)
         audio = r.listen(source)
 
     try:
-        # print('Recognizing..')
+        print('Recognizing..')
         query = r.recognize_google(audio, language='en-in')
         print(query)
 
@@ -114,11 +122,11 @@ if __name__ == '__main__':
         count+=1
         hour=datetime.datetime.now().hour
         minute=datetime.datetime.now().minute
-        if count==100:
-            random.choice([joke,fact,wisdom,remember,speak_news])()
+        if count==69:
+            random.choice([askbrain,joke,fact,wisdom,remember,speak_news])()
             count=0
 
-        if hour==22 and once:
+        if hour==16 and once:
             speak("Good evening Sir!")
             with open("todolist.txt", 'r') as todolist:
                 todo = todolist.readlines()
@@ -153,9 +161,7 @@ if __name__ == '__main__':
                                  "I have been here for a while!"]))
 
         if 'jarvis' in query and len(query)>15 and 'play' not in query:
-            while query!='none':
-                speak(brain(query))
-                query=takeCommand().lower()
+            askbrain()
 
         if 'what is the time' in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
