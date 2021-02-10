@@ -22,29 +22,4 @@
  <li>YouTube Downloader, download any youtube video by just putting url of video</li>
 </ul>
 
-### Requirements:
-<li>datetime</li>
-<li>os</li>
-<li> pyttsx3</li>
-<li> wikipedia</li>
-<li> speech_recognition </li>
-<li> webbrowser</li>
-<li> sys</li>
-<li> smtplib</li>
-<li>requests</li>
-<li>json</li>
-<li>defflib</li>
-<li>geocoder</li>
-<h2>Required Packages</h2>
-
-```
-pip3 install SpeechRecognition
-pip3 install jsonlib
-pip3 install pyttsx3
-pip3 install PyAudio
-pip3 install geocoder
-pip3 install loc
-pip3 install wikipedia
-
-```
 -Rajesh
