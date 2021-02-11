@@ -7,6 +7,7 @@
   <li>Tells you jokes, fun facts and weird things occasionally</li>
   <li>Remembers stuff if asked</li>
 <li>Recommends to take break</li>
+  <li>Will read selected text if asked</li>
   <li>Will prompt to go to bed early</li>
   <li>Takes screenshot if told</li>
   <li>Opens any application</li>
