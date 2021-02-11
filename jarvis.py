@@ -10,10 +10,12 @@ import random
 import urllib.request
 import urllib.parse
 import geocoder, requests
-from bs4 import BeautifulSoup
+import pyautogui as pya
+import pyperclip
 import sys
-from news import speak_news, getNewsUrl
 import time
+from bs4 import BeautifulSoup
+from news import speak_news, getNewsUrl
 from loc import weather
 from youtube import you
 from brain import brain
@@ -32,9 +34,7 @@ def joke():
     q=takeCommand().lower()
     if 'no' in q:
         speak("sorry for disturbing you Sir!")
-        return None
-    else:
-        speak(pyjokes.get_joke())
+    speak(pyjokes.get_joke())
 
 def fact():
     speak("Here is a fun fact:.. .."+randfacts.getFact())
@@ -46,6 +46,11 @@ def askbrain(query='ask me'):
         speak(brain(query))
         query = takeCommand().lower()
 
+def readselected():
+    pya.hotkey('ctrl', 'c')
+    time.sleep(.01)
+    return pyperclip.paste()
+
 def remember():
     remember = open('data.txt', 'r')
     speak("you said me to remember that" + remember.read())
@@ -53,14 +58,14 @@ def remember():
 def takeCommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
-        print('Listening...')
+        # print('Listening...')
         r.pause_threshold = 0.7
         # r.energy_threshold = 50
         r.adjust_for_ambient_noise(source, duration=1)
         audio = r.listen(source)
 
     try:
-        print('Recognizing..')
+        # print('Recognizing..')
         query = r.recognize_google(audio, language='en-in')
         print(query)
 
@@ -122,7 +127,7 @@ if __name__ == '__main__':
         count+=1
         hour=datetime.datetime.now().hour
         minute=datetime.datetime.now().minute
-        if count==69:
+        if count==100:
             random.choice([askbrain,joke,fact,wisdom,remember,speak_news])()
             count=0
 
@@ -160,9 +165,6 @@ if __name__ == '__main__':
                                  "I am here",
                                  "I have been here for a while!"]))
 
-        if 'jarvis' in query and len(query)>15 and 'play' not in query:
-            askbrain(query)
-
         if 'what is the time' in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
             speak(f'Sir, the time is {strTime}')
@@ -185,6 +187,9 @@ if __name__ == '__main__':
             print(results)
             speak(results)
             continue
+
+        elif 'read' in query:
+            speak(readselected())
 
         elif 'youtube downloader' in query:
             exec(open('youtube_downloader.py').read())
@@ -210,6 +215,7 @@ if __name__ == '__main__':
             index=str(soup).find("/watch?v=")
             url="http://www.youtube.com"+str(soup)[index:index+20]
             webbrowser.open_new_tab(url)
+            continue
 
         elif 'shut up' in query:
             time.sleep(300)
@@ -331,3 +337,6 @@ if __name__ == '__main__':
                 speak('You can now read the full news from this website.')
             else:
                 pass
+
+        elif 'jarvis' in query and len(query)>15:
+            askbrain(query)
