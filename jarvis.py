@@ -32,19 +32,25 @@ def speak(audio):
 def joke():
     speak("Sir, would you like to hear something funny?")
     q=takeCommand().lower()
-    if 'no' in q:
+    if q=='no':
         speak("sorry for disturbing you Sir!")
-    speak(pyjokes.get_joke())
+    else:    
+        speak(pyjokes.get_joke())
 
 def fact():
     speak("Here is a fun fact:.. .."+randfacts.getFact())
 
 def askbrain(query='ask me'):
+    onetime=True
     if query=='ask me':
+        priorload=brain(query)
         speak("Sir! I have been wondering!")
+        speak(priorload)
     while query != 'none':
-        speak(brain(query))
+        if not onetime:
+            speak(brain(query))
         query = takeCommand().lower()
+        onetime=False
 
 def readselected():
     pya.hotkey('ctrl', 'c')
@@ -77,33 +83,39 @@ def takeCommand():
 def todolist():
     with open("todolist.txt", 'r') as todolist:
         todo=todolist.readlines()
-        print(todo)
-        if len(todo)==0:
-            speak("Sir!, You don't have any tasks registered. Do you want to add a task to the list?")
-            query=takeCommand().lower()
-            if 'yes' in query:
-                addlist()
-        else:
-            speak("I have the list with me. What do you like to do with it?")
-            query=takeCommand().lower()
-            while query!='none':
-                if 'read' in query:
-                    speak("you have to do the following:")
-                    for tasks in todo:
-                        speak(tasks)
-                if 'ad' in query[:2]:
-                    addlist(query[3:])
-                if 'delete' in query:
-                    speak("This feature is available for premium users only. Please purchase Jarvis Pro to unlock this feature. Just kidding, my master is lazy")
-                query = takeCommand().lower()
-            speak("I closed the list")
+    print(todo)
+    if len(todo)==0:
+        speak("Sir!, You don't have any tasks registered. Do you want to add a task to the list?")
+        query=takeCommand().lower()
+        if 'yes' in query:
+            addlist()
+    else:
+        speak("I have the list with me. What do you like to do with it?")
+        query=takeCommand().lower()
+        while query!='none':
+            if 'read' in query or 'what' in query:
+                speak("you have to do the following:")
+                for tasks in todo:
+                    speak(tasks)
+            elif 'show' in query:
+                os.startfile("C:\\Users\\Rajesh\\PycharmProjects\\JARVIS\\todolist.txt")
+            elif 'ad' in query[:2]:
+                addlist(query[3:])
+            if 'delete' in query:
+                speak("This feature is available for premium users only. Please purchase Jarvis Pro to unlock this feature. Just kidding, my master is lazy")
+            query = takeCommand().lower()
+        speak("I closed the list")
 
 def addlist(data='none'):
     if data=='none':
         speak("What do you want to add?")
         data=takeCommand().strip()
-    with open("todolist.txt", 'a') as todolist:
-        todolist.write("\n"+data)
+    speak("You want to add"+data+"right?")
+    query=takeCommand().lower()
+    if 'yes' in query or 'right' in query:
+        with open("todolist.txt", 'a') as todolist:
+            speak("added"+data)
+            todolist.write("\n"+data)
 
 def wishMe():
     hour = int(datetime.datetime.now().hour)
@@ -261,7 +273,7 @@ if __name__ == '__main__':
             speak('Raaajesh kanna is my master. He created me on February 5, 2021')
         elif 'your name' in query:
             speak('My name is JARVIS')
-        elif 'jarvis stand' in query or 'jarvis stands for' in query:
+        elif 'jarvis stand' in query or 'jarvis means' in query:
             speak('J.A.R.V.I.S stands for JUST A RATHER VERY INTELLIGENT SYSTEM')
         elif 'open paint' in query:
             os.startfile("C:\\WINDOWS\\system32\\mspaint.exe")
