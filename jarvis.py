@@ -34,7 +34,7 @@ def joke():
     q=takeCommand().lower()
     if q=='no':
         speak("sorry for disturbing you Sir!")
-    else:    
+    else:
         speak(pyjokes.get_joke())
 
 def fact():
@@ -317,7 +317,10 @@ if __name__ == '__main__':
             remember.close()
 
         elif 'list' in query:
-            todolist()
+            try:
+                todolist()
+            except TypeError:
+                speak("I am having some troubles getting the to-do-list. Please try again later sir!")
 
         elif 'remember anything' in query:
             remember()
