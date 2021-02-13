@@ -128,6 +128,12 @@ def wishMe():
     weather()
     speak('I am JARVIS. Please tell me how can I help you SIR?')
 
+def gettask():
+    speak("I know it is weird to give command to my master, but still")
+    with open("todolist.txt", 'r') as todolist:
+        todo = todolist.readlines()
+    speak("Can you go and"+random.choice(todo)+
+          ". You're gonna wake up and work hard at it. Don't let your dreams be dreams, Make your dreams come true. Nothing is impossible. Yes, you can. Just do it. Just ... do it. Stop giving up. Yesterday you said tommorow. You should get to the point where anyone else would quit. And you're not gonna stop there. Make your dreams come true. Nothing is impossible. No, what are you waiting for. Just do it. Make your dreams come true. Just do it")
 
 if __name__ == '__main__':
     count,override,breaktime,once=0,False,60,True
@@ -139,8 +145,8 @@ if __name__ == '__main__':
         count+=1
         hour=datetime.datetime.now().hour
         minute=datetime.datetime.now().minute
-        if count==100:
-            random.choice([askbrain,joke,fact,wisdom,remember,speak_news])()
+        if count==150:
+            random.choice([gettask,askbrain,joke,fact,wisdom,remember,speak_news])()
             count=0
 
         if hour==16 and once:
