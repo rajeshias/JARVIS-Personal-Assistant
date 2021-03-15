@@ -282,8 +282,10 @@ if __name__ == '__main__':
             continue
 
         elif 'shut up' in query:
-            # time.sleep(300)
-            speak('No. You shut up!')
+            if bool(random.getrandbits(1)):
+                time.sleep(300)
+            else:
+                speak('No. You shut up!')
 
         elif 'search youtube' in query:
             speak('What you want to search on Youtube?')
@@ -335,7 +337,7 @@ if __name__ == '__main__':
         elif 'open notepad' in query:
             os.startfile("C:\\WINDOWS\\system32\\notepad.exe")
         elif 'davinci resolve' in query:
-            os.startfile("C:\\Program Files\\Adobe\\Adobe Premiere Pro CC 2019\\Adobe Premiere Pro.exe")
+            os.startfile("C:\\Program Files\\Blackmagic Design\\DaVinci Resolve\\Resolve.exe")
         elif 'open task manager' in query:
             os.startfile("C:\\WINDOWS\\system32\\Taskmgr.exe")
         elif 'open calculator' in query:
