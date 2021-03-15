@@ -68,7 +68,7 @@ def takeCommand():
         r.pause_threshold = 0.8
         # r.energy_threshold = 400
         r.adjust_for_ambient_noise(source, duration=1)
-        audio = r.listen(source, phrase_time_limit=20)
+        audio = r.listen(source, phrase_time_limit=30)
 
     try:
         query = r.recognize_google(audio, language='en-in')
@@ -147,8 +147,11 @@ if __name__ == '__main__':
 
         if not prod:
             wion = urllib.request.urlopen("https://www.youtube.com/channel/UC_gUM8rL-Lrg6O3adPW9K1g/videos")
+            caspian = urllib.request.urlopen("https://www.youtube.com/c/CaspianReport/videos")
             wionsoup = str(BeautifulSoup(wion.read().decode(), 'lxml'))
+            caspiansoup = str(BeautifulSoup(caspian.read().decode(), 'lxml'))
             latestnews = wionsoup.find("ytimg.com/vi/") + 13
+            latestreport = caspiansoup.find("ytimg.com/vi/") + 13
 
             if onetimewion:
                 newurl = ''
@@ -156,11 +159,24 @@ if __name__ == '__main__':
                     newurl += wionsoup[latestnews]
                     latestnews += 1
                 oldurl.append(newurl)
+                newurl = ''
+                while caspiansoup[latestreport] != '/':
+                    newurl += caspiansoup[latestreport]
+                    latestnews += 1
+                oldurl.append(newurl)
                 onetimewion = False
             else:
                 newurl = ''
                 while wionsoup[latestnews] != '/':
                     newurl += wionsoup[latestnews]
+                    latestnews += 1
+                if newurl not in oldurl:
+                    url = "http://www.youtube.com/watch?v=" + newurl
+                    webbrowser.open_new_tab(url)
+                    oldurl.append(newurl)
+                newurl = ''
+                while caspiansoup[latestreport] != '/':
+                    newurl += caspiansoup[latestreport]
                     latestnews += 1
                 if newurl not in oldurl:
                     url = "http://www.youtube.com/watch?v=" + newurl
